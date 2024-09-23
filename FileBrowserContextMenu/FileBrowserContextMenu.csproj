@@ -10,10 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Gear.png" />
-    <Resource Include="Resources\gear_16xLG.png" />
-    <EmbeddedResource Include="Resources\Monaco_Settings_16x.png" />
+    <None Remove="Resources\Gears.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Resources\Settings_16x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Gears.ico" />
   </ItemGroup>
 
   <ItemGroup>

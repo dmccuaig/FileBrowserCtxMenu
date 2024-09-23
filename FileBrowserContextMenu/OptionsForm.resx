@@ -123,4 +123,29 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAD29vYHAAAAAPb29iL29vb/9vb2//b29v/29vb/9vb2IgAAAAD29vYHAAAAAAAA
+        AAAAAAAAAAAAAAAAAAD29vYV9vb20/b29pz29vZawcHB/0JCQv9CQkL/w8PD//b29lr29vac9vb20/b2
+        9hUAAAAAAAAAAAAAAAD29vYV9vb206SkpP+ysrL/9vb2+qOjo/9CQkL/QkJC/6SkpP/29vb6srKy/6Sk
+        pP/29vbT9vb2FQAAAAD29vYH9vb206SkpP9CQkL/QkJC/25ubv9OTk7/QkJC/0JCQv9QUFD/cHBw/0JC
+        Qv9CQkL/pKSk//b29tP29vYHAAAAAPb29pyysrL/QkJC/0JCQv9CQkL/QkJC/0JCQv9CQkL/QkJC/0JC
+        Qv9CQkL/QkJC/7Kysv/29vacAAAAAPb29iL29vZa9vb2+nBwcP9CQkL/QkJC/0JCQv9OTk7/Tk5O/0JC
+        Qv9CQkL/QkJC/25ubv/29vb69vb2Wvb29iL29vb/w8PD/6ampv9QUFD/QkJC/0JCQv+cnJz/9fX1//X1
+        9f+cnJz/QkJC/0JCQv9OTk7/o6Oj/8HBwf/09PT/9vb2/0JCQv9CQkL/QkJC/0JCQv9OTk7/9fX1//b2
+        9v/29vb/9fX1/05OTv9CQkL/QkJC/0JCQv9CQkL/6+vr//b29v9CQkL/QkJC/0JCQv9CQkL/Tk5O//X1
+        9f/29vb/9vb2//X19f9OTk7/QkJC/0JCQv9CQkL/QkJC/+vr6//29vb/wcHB/6Ojo/9OTk7/QkJC/0JC
+        Qv+cnJz/9fX1//X19f+cnJz/QkJC/0JCQv9QUFD/pqam/8PDw//09PT/9vb2Ivb29lr29vb6bm5u/0JC
+        Qv9CQkL/QkJC/05OTv9OTk7/QkJC/0JCQv9CQkL/cHBw//b29vr29vZa9vb2IgAAAAD29vacsrKy/0JC
+        Qv9CQkL/QkJC/0JCQv9CQkL/QkJC/0JCQv9CQkL/QkJC/0JCQv+ysrL/9vb2nAAAAAD29vYH9vb206Sk
+        pP9CQkL/QkJC/3BwcP9QUFD/QkJC/0JCQv9OTk7/bm5u/0JCQv9CQkL/pKSk//b29tP29vYHAAAAAPb2
+        9hX29vbTpKSk/7Kysv/29vb6pqam/0JCQv9CQkL/pqam//b29vqysrL/pKSk//b29tP29vYVAAAAAAAA
+        AAAAAAAA9vb2Ffb29tP29vac9vb2WsLCwv9CQkL/QkJC/8PDw//29vZa9vb2nPb29tP29vYVAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD29vb/9vb2//b29v/29vb/9vb2IgAAAAD29vYHAAAAAAAA
+        AAAAAAAA6BcAAMADAACAAQAAAAAAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAIAB
+        AADAAwAA/BcAAA==
+</value>
+  </data>
 </root>

@@ -30,6 +30,7 @@
 		{
 			components = new System.ComponentModel.Container();
 			Label label1;
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsForm));
 			_startPathTextBox = new TextBox();
 			_startPathBrowseButton = new Button();
 			_okButton = new Button();
@@ -114,9 +115,10 @@
 			Controls.Add(_startPathBrowseButton);
 			Controls.Add(_startPathTextBox);
 			Controls.Add(label1);
+			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "OptionsForm";
 			StartPosition = FormStartPosition.CenterScreen;
-			Text = "Shortcut Browser Options";
+			Text = "Options";
 			ResumeLayout(false);
 			PerformLayout();
 		}

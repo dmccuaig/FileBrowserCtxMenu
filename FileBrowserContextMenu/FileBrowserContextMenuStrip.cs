@@ -38,7 +38,8 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 
 	private void InitializeComponents()
 	{
-		_optionsMenuItem = new ToolStripMenuItem("Options");
+		_optionsMenuItem = new ToolStripMenuItem("Options...");
+		_optionsMenuItem.Image = Resources.Settings_16x;
 		_optionsMenuItem.Click += OnSetOptions_Click;
 	}
 
