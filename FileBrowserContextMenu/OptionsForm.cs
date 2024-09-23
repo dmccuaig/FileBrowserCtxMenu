@@ -14,12 +14,6 @@
 			set => _showFileExtensionsCheckBox.Checked = value;
 		}
 
-		public bool RunProgram
-		{
-			get => _runProgramCheckBox.Checked;
-			set => _runProgramCheckBox.Checked = value;
-		}
-
 		public OptionsForm()
 		{
 			InitializeComponent();

@@ -1,190 +1,152 @@
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using giuaC.FileBrowserContextMenu.Properties;
+using Microsoft.Win32;
 
 namespace giuaC.FileBrowserContextMenu;
 
-public class FileBrowserContextMenuStrip : ContextMenuStrip
+public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged
 {
-	internal Properties.Settings Options => Properties.Settings.Default;
-
+	private string? _startPath;
 	public string? StartPath
 	{
-		get => Options.StartPath;
-		set => Options.StartPath = value;
+		get => _startPath;
+		set => SetField(ref _startPath, value);
 	}
 
+	private bool _showFileExtensions;
 	public bool ShowFileExtensions
 	{
-		get => Options.ShowFileExtensions;
-		set => Options.ShowFileExtensions = value;
+		get => _showFileExtensions;
+		set => SetField(ref _showFileExtensions, value);
 	}
 
-	public bool RunProgram
-	{
-		get => Options.RunProgram;
-		set => Options.RunProgram = value;
-	}
 
-	private readonly ToolStripMenuItem? _optionsMenuItem;
-	private string? _startPath;
-	private bool _showFileExtensions;
-	private bool _runProgram;
+	private bool _isPopulated;
+	private ToolStripMenuItem? _optionsMenuItem;
 
 	public FileBrowserContextMenuStrip() : this(null) { }
 
 	public FileBrowserContextMenuStrip(IContainer? components)
 		: base(components!)
 	{
-		var icon = SystemIcons.GetStockIcon(StockIconId.Application).ToBitmap();
-		_optionsMenuItem = new ToolStripMenuItem("Options", icon);
-		_optionsMenuItem.Click += OptionsMenuItem_Click;
-		AddOptionsMenuItem();
+		InitializeComponents();
+		PropertyChanged += OnPropertyChanged;
+		RestoreOptions();
+		ClearMenu();
+	}
+
+	private void InitializeComponents()
+	{
+		_optionsMenuItem = new ToolStripMenuItem("Options");
+		_optionsMenuItem.Click += OnSetOptions_Click;
+	}
+
+	protected override void OnOpening(CancelEventArgs e)
+	{
+		PopulateMenu();
+		base.OnOpening(e);
+	}
+
+	private void PopulateMenu()
+	{
+		if (_isPopulated) return;
+
+		if (string.IsNullOrWhiteSpace(StartPath) == false && Path.Exists(StartPath))
+		{
+			var dirInfo = new DirectoryInfo(StartPath);
+			var dirMenuItem = new FolderMenuItem(dirInfo, ShowFileExtensions);
+			dirMenuItem.PopulateChildren();
+			Items.AddRange(dirMenuItem.DropDownItems);
+		}
+
+		if (Items.Count > 0)
+			Items.Add(new ToolStripSeparator());
+
+		Items.Add(_optionsMenuItem!);
+
+		_isPopulated = true;
+	}
+
+	private void ClearMenu()
+	{
+		Items.Clear();
+		_isPopulated = false;
+		Items.Add(_optionsMenuItem!);
 	}
 
 	#region Options
 
-	private void OptionsMenuItem_Click(object? sender, EventArgs e) => SetOptions();
+	private void OnSetOptions_Click(object? sender, EventArgs e) => SetOptions();
 
 	private void SetOptions()
 	{
 		var dlg = new OptionsForm();
 		dlg.StartPath = StartPath;
 		dlg.ShowFileExtensions = ShowFileExtensions;
-		dlg.RunProgram = RunProgram;
 
 		if (dlg.ShowDialog(this) != DialogResult.OK)
 			return;
 
 		StartPath = dlg.StartPath;
 		ShowFileExtensions = dlg.ShowFileExtensions;
-		RunProgram = dlg.RunProgram;
-		Options.Save();
-
-		ClearMenu(Items);
-		FillMenu();
+		SaveOptions();
 	}
 
-	private void AddOptionsMenuItem() => Items.Add(_optionsMenuItem!);
+	public string PersistenceId { get; set; } = "eace7d61-8a93-4bda-b7ff-f1aed2aeaa0d";
+
+	private RegistryKey GetPersistenceKey()
+	{
+		using  RegistryKey parentRegKey = Registry.CurrentUser.CreateSubKey($"{nameof(giuaC)}.{nameof(FileBrowserContextMenu)}");
+		return parentRegKey.CreateSubKey(PersistenceId);
+	}
+
+	private void SaveOptions()
+	{
+		using RegistryKey regKey = GetPersistenceKey();
+		regKey.SetValue(nameof(StartPath), StartPath ?? string.Empty);
+		regKey.SetValue(nameof(ShowFileExtensions), ShowFileExtensions ? "1" : "0");
+	}
+
+	private void RestoreOptions()
+	{
+		using RegistryKey regKey = GetPersistenceKey();
+		_startPath = regKey.GetValue(nameof(StartPath), StartPath ?? string.Empty) as string;
+		string? showFileExtensions = regKey.GetValue(nameof(ShowFileExtensions)) as string;
+		_showFileExtensions = showFileExtensions == "1";
+	}
 
 	#endregion
 
-	public void ClearMenu(ToolStripItemCollection menuItems)
+	#region PropertyChanged
+
+	public event PropertyChangedEventHandler? PropertyChanged;
+
+	protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
 	{
-		foreach (var toolStripItem in menuItems.OfType<ToolStripMenuItem>())
-		{
-			// Release event handler
-			toolStripItem.Click -= OnFileMenuItemClicked;
-
-			if(toolStripItem.DropDownItems.Count > 0)
-				ClearMenu(toolStripItem.DropDownItems);
-		}
-
-		menuItems.Clear();
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
-	public void FillMenu()
+	protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
 	{
-		if (string.IsNullOrWhiteSpace(StartPath) == false)
-		{
-			var dirInfo = new DirectoryInfo(StartPath);
-			if(dirInfo.Exists)
-			{
-				var folderMenuItems = CreateFolderMenuItem(dirInfo);
-				Items.AddRange(folderMenuItems.DropDownItems);
-			}
-		}
-
-		if(Items.Count > 0)
-			Items.Add(new ToolStripSeparator());
-
-		Items.Add(_optionsMenuItem!);
+		if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+		field = value;
+		RaisePropertyChanged(propertyName);
+		return true;
 	}
 
-	public ToolStripMenuItem CreateFolderMenuItem(DirectoryInfo directoryInfo, ToolStripItemCollection? menuItemCollection = null)
+	private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
 	{
-		var folderMenuItem = new ToolStripMenuItem(directoryInfo.Name);
-
-		using Icon folderIcon = SystemIcons.GetStockIcon(StockIconId.Folder);
+		switch (e.PropertyName)
 		{
-			var folderBitMap = folderIcon.ToBitmap();
-			folderMenuItem.Image = folderBitMap;
-		}
-
-		menuItemCollection?.Add(folderMenuItem);
-
-		foreach (var fileSysInfo in directoryInfo.EnumerateFileSystemInfos())
-		{
-			switch (fileSysInfo)
-			{
-				case DirectoryInfo dirInfo:
-					CreateFolderMenuItem(dirInfo, folderMenuItem.DropDownItems);
-					break;
-				case FileInfo fileInfo:
-					CreateFileMenuItem(folderMenuItem.DropDownItems, fileInfo);
-					break;
-				default:
-					continue;
-			}
-		}
-
-		return folderMenuItem;
-	}
-
-	public void CreateFileMenuItem(ToolStripItemCollection menuItemCollection, FileInfo fileInfo)
-	{
-		string name = ShowFileExtensions ? fileInfo.Name : Path.GetFileNameWithoutExtension(fileInfo.Name);
-		var fileMenuItem = new ToolStripMenuItem(name);
-		fileMenuItem.Tag = fileInfo.FullName;
-
-		Icon? icon = null;
-		try
-		{
-			icon = Icon.ExtractAssociatedIcon(fileInfo.FullName);
-			if (icon != null)
-			{
-				if (icon is { Width: >= 16, Height: >= 16 })
-				{
-					fileMenuItem.Image = icon.ToBitmap();
-				}
-			}
-		}
-		catch
-		{
-			// Don't fail if cannot set icon.
-		}
-		finally
-		{
-			icon?.Dispose();
-		}
-
-		if (RunProgram)
-		{
-			fileMenuItem.Click += OnFileMenuItemClicked;
-		}
-
-		menuItemCollection.Add(fileMenuItem);
-	}
-
-	private void OnFileMenuItemClicked(object? sender, EventArgs e)
-	{
-		var menuItem = sender as ToolStripMenuItem;
-		if (menuItem?.Tag is string path && string.IsNullOrWhiteSpace(path) == false)
-		{
-			using var process = new Process();
-			process.StartInfo.UseShellExecute = true;
-			process.StartInfo.FileName = path;
-			process.Start();
+			case nameof(StartPath):
+			case nameof(ShowFileExtensions):
+				ClearMenu();
+				SaveOptions();
+				break;
 		}
 	}
 
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing)
-		{
-			ClearMenu(Items);
-			_optionsMenuItem!.Click -= OptionsMenuItem_Click;
-		}
+	#endregion
 
-		base.Dispose(disposing);
-	}
 }

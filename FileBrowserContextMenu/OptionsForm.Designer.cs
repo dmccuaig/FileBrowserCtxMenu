@@ -34,8 +34,7 @@
 			_startPathBrowseButton = new Button();
 			_okButton = new Button();
 			_showFileExtensionsCheckBox = new CheckBox();
-			_runProgramCheckBox = new CheckBox();
-			ToolTip toolTip1 = new ToolTip(components);
+			toolTip1 = new ToolTip(components);
 			_cancelButton = new Button();
 			label1 = new Label();
 			SuspendLayout();
@@ -93,17 +92,6 @@
 			toolTip1.SetToolTip(_showFileExtensionsCheckBox, "Show or hide file extensions");
 			_showFileExtensionsCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// _runProgramCheckBox
-			// 
-			_runProgramCheckBox.AutoSize = true;
-			_runProgramCheckBox.Location = new Point(12, 60);
-			_runProgramCheckBox.Name = "_runProgramCheckBox";
-			_runProgramCheckBox.Size = new Size(96, 19);
-			_runProgramCheckBox.TabIndex = 5;
-			_runProgramCheckBox.Text = "Run Program";
-			toolTip1.SetToolTip(_runProgramCheckBox, "Run program on left click");
-			_runProgramCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// _cancelButton
 			// 
 			_cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -121,7 +109,6 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(553, 90);
 			Controls.Add(_cancelButton);
-			Controls.Add(_runProgramCheckBox);
 			Controls.Add(_showFileExtensionsCheckBox);
 			Controls.Add(_okButton);
 			Controls.Add(_startPathBrowseButton);
@@ -140,7 +127,7 @@
 		private Button _startPathBrowseButton;
 		private Button _okButton;
 		private CheckBox _showFileExtensionsCheckBox;
-		private CheckBox _runProgramCheckBox;
 		private Button _cancelButton;
+		private ToolTip toolTip1;
 	}
 }
