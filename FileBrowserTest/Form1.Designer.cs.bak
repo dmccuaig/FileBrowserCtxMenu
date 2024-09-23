@@ -38,11 +38,6 @@ namespace FileBrowserTest
 			label1 = new Label();
 			SuspendLayout();
 			// 
-			// _fileBrowserContextMenuStrip
-			// 
-			_fileBrowserContextMenuStrip.Name = "_fileBrowserContextMenuStrip";
-			_fileBrowserContextMenuStrip.Size = new Size(61, 4);
-			// 
 			// label1
 			// 
 			label1.AutoSize = true;
@@ -70,7 +65,6 @@ namespace FileBrowserTest
 			showFileExtensionsCheckBox.TabIndex = 3;
 			showFileExtensionsCheckBox.Text = "checkBox1";
 			showFileExtensionsCheckBox.UseVisualStyleBackColor = true;
-			ContextMenuStrip = _fileBrowserContextMenuStrip;
 			// 
 			// Form1
 			// 

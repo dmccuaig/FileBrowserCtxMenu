@@ -10,15 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Gears.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Settings_16x.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\Gears.ico" />
   </ItemGroup>
 
   <ItemGroup>

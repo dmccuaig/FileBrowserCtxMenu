@@ -1,4 +1,6 @@
-﻿namespace giuaC.FileBrowserContextMenu
+﻿using System.Runtime.InteropServices;
+
+namespace giuaC.FileBrowserContextMenu
 {
 	public partial class OptionsForm : Form
 	{
@@ -17,6 +19,7 @@
 		public OptionsForm()
 		{
 			InitializeComponent();
+			Icon = Icon.FromHandle(Properties.Resources.Settings_16x.GetHicon());
 			Closing += OptionsForm_Closing;
 			_startPathBrowseButton.Click += (_, _) => EditStartPath();
 			_startPathTextBox.DoubleClick += (_, _) => EditStartPath();
@@ -58,6 +61,9 @@
 
 			return dlg.SelectedPath;
 		}
+
+		[System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+		private static extern bool DestroyIcon(IntPtr handle);
 
 	}
 }

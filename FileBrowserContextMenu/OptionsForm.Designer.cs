@@ -115,7 +115,6 @@
 			Controls.Add(_startPathBrowseButton);
 			Controls.Add(_startPathTextBox);
 			Controls.Add(label1);
-			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "OptionsForm";
 			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Options";
