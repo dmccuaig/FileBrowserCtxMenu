@@ -2,11 +2,15 @@ namespace giuaC.FileBrowserContextMenu;
 
 public sealed class FileMenuItem : ToolStripMenuItem
 {
+	private readonly FileInfo _fileInfo;
+
 	public FileMenuItem(FileInfo fileInfo, bool showFileExtensions = true)
 	{
+		_fileInfo = fileInfo;
+
 		string name = showFileExtensions ? fileInfo.Name : Path.GetFileNameWithoutExtension(fileInfo.Name);
 		Text = name;
-		Tag = fileInfo;
+
 
 		Icon? icon = null;
 		try
@@ -26,4 +30,25 @@ public sealed class FileMenuItem : ToolStripMenuItem
 			icon?.Dispose();
 		}
 	}
+
+	private FileBrowserContextMenuStrip? GetContextMenuStrip()
+	{
+		ToolStripItem? menuItem = this;
+
+		while (menuItem.OwnerItem != null)
+		{
+			menuItem = menuItem.OwnerItem;
+		}
+
+		return menuItem.Owner as FileBrowserContextMenuStrip;
+	}
+
+	protected override void OnClick(EventArgs e)
+	{
+		base.OnClick(e);
+
+		FileBrowserContextMenuStrip? ctxMenuStrip = GetContextMenuStrip();
+		ctxMenuStrip?.OnFileClicked(_fileInfo);
+	}
+
 }

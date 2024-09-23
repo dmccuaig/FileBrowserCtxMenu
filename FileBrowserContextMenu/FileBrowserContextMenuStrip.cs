@@ -7,7 +7,8 @@ namespace giuaC.FileBrowserContextMenu;
 
 public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged
 {
-	private string? _startPath;
+	private string? _startPath = "";
+	[Bindable(true)]
 	public string? StartPath
 	{
 		get => _startPath;
@@ -15,12 +16,14 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	}
 
 	private bool _showFileExtensions;
+	[Bindable(true)]
 	public bool ShowFileExtensions
 	{
 		get => _showFileExtensions;
 		set => SetField(ref _showFileExtensions, value);
 	}
 
+	public string OptionsFormTitle { get; set; } = "Options";
 
 	private bool _isPopulated;
 	private ToolStripMenuItem? _optionsMenuItem;
@@ -76,6 +79,13 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		Items.Add(_optionsMenuItem!);
 	}
 
+	public event EventHandler<FileInfo>? FileMenuItemClicked;
+
+	public void OnFileClicked(FileInfo fileInfo)
+	{
+		FileMenuItemClicked?.Invoke(this, fileInfo);
+	}
+
 	#region Options
 
 	private void OnSetOptions_Click(object? sender, EventArgs e) => SetOptions();
@@ -84,34 +94,45 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	{
 		var dlg = new OptionsForm();
 		dlg.StartPath = StartPath;
+		dlg.Text = OptionsFormTitle;
 		dlg.ShowFileExtensions = ShowFileExtensions;
 
 		if (dlg.ShowDialog(this) != DialogResult.OK)
 			return;
 
-		StartPath = dlg.StartPath;
+		StartPath = dlg.StartPath ?? "";
 		ShowFileExtensions = dlg.ShowFileExtensions;
 		SaveOptions();
 	}
 
-	public string PersistenceId { get; set; } = "eace7d61-8a93-4bda-b7ff-f1aed2aeaa0d";
+	public string PersistenceId { get; set; } = "Default";
+	private const string ProductKeyName = $"{nameof(giuaC)}.{nameof(FileBrowserContextMenu)}";
 
-	private RegistryKey GetPersistenceKey()
+	private RegistryKey CreatePersistenceKey()
 	{
-		using  RegistryKey parentRegKey = Registry.CurrentUser.CreateSubKey($"{nameof(giuaC)}.{nameof(FileBrowserContextMenu)}");
-		return parentRegKey.CreateSubKey(PersistenceId);
+		using RegistryKey productRegKey = Registry.CurrentUser.CreateSubKey(ProductKeyName);
+		return productRegKey.CreateSubKey(PersistenceId);
+	}
+
+	private RegistryKey? GetPersistenceKey()
+	{
+		using RegistryKey? productRegKey = Registry.CurrentUser.OpenSubKey(ProductKeyName);
+		return productRegKey?.OpenSubKey(PersistenceId);
 	}
 
 	private void SaveOptions()
 	{
-		using RegistryKey regKey = GetPersistenceKey();
+		using RegistryKey regKey = CreatePersistenceKey();
 		regKey.SetValue(nameof(StartPath), StartPath ?? string.Empty);
 		regKey.SetValue(nameof(ShowFileExtensions), ShowFileExtensions ? "1" : "0");
 	}
 
 	private void RestoreOptions()
 	{
-		using RegistryKey regKey = GetPersistenceKey();
+		using RegistryKey? regKey = GetPersistenceKey();
+		if(regKey == null)
+			return;
+
 		_startPath = regKey.GetValue(nameof(StartPath), StartPath ?? string.Empty) as string;
 		string? showFileExtensions = regKey.GetValue(nameof(ShowFileExtensions)) as string;
 		_showFileExtensions = showFileExtensions == "1";

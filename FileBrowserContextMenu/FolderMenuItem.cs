@@ -7,9 +7,9 @@ public sealed class FolderMenuItem : ToolStripMenuItem
 
 	public DirectoryInfo DirectoryInfo { get; }
 
-	public FolderMenuItem(DirectoryInfo dirInfo, bool ShowFileExtensions)
+	public FolderMenuItem(DirectoryInfo dirInfo, bool showFileExtensions)
 	{
-		_showFileExtensions = ShowFileExtensions;
+		_showFileExtensions = showFileExtensions;
 		DirectoryInfo = dirInfo;
 
 		using Icon folderIcon = SystemIcons.GetStockIcon(StockIconId.Folder);
