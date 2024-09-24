@@ -54,9 +54,6 @@ public partial class OptionsForm : Form
 			dlg.RootFolder = Environment.SpecialFolder.Desktop;
 		}
 
-		if (dlg.ShowDialog() != DialogResult.OK)
-			return null;
-
-		return dlg.SelectedPath;
+		return dlg.ShowDialog() == DialogResult.OK ? dlg.SelectedPath : null;
 	}
 }

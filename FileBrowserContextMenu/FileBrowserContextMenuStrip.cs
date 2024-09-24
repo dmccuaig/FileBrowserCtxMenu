@@ -81,7 +81,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 
 	public event EventHandler<FileInfo>? FileMenuItemClicked;
 
-	public void OnFileClicked(FileInfo fileInfo)
+	internal void OnFileClicked(FileInfo fileInfo)
 	{
 		FileMenuItemClicked?.Invoke(this, fileInfo);
 	}

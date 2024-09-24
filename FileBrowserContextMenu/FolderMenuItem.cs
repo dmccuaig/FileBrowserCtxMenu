@@ -4,13 +4,12 @@ public sealed class FolderMenuItem : ToolStripMenuItem
 {
 	private readonly bool _showFileExtensions;
 	private bool _isPopulated;
-
-	public DirectoryInfo DirectoryInfo { get; }
+	private readonly DirectoryInfo _directoryInfo;
 
 	public FolderMenuItem(DirectoryInfo dirInfo, bool showFileExtensions)
 	{
 		_showFileExtensions = showFileExtensions;
-		DirectoryInfo = dirInfo;
+		_directoryInfo = dirInfo;
 
 		using Icon folderIcon = SystemIcons.GetStockIcon(StockIconId.Folder);
 		{
@@ -21,29 +20,30 @@ public sealed class FolderMenuItem : ToolStripMenuItem
 
 		if (HasFiles(dirInfo))
 			DropDownItems.Add(new ToolStripMenuItem()); // Dummy item to get right triangle glyph
+
+		DropDownOpening += OnDropDownOpening;
 	}
 
-	public static bool HasFiles(DirectoryInfo directoryInfo)
+	private void OnDropDownOpening(object? sender, EventArgs e)
+	{
+		if (_isPopulated == false)
+			PopulateChildren();
+	}
+
+	private static bool HasFiles(DirectoryInfo directoryInfo)
 	{
 		using var fileInfo = directoryInfo.EnumerateFileSystemInfos().GetEnumerator();
 		return fileInfo.MoveNext();
 	}
 
-	protected override void OnMouseEnter(EventArgs e)
-	{
-		base.OnMouseEnter(e);
-		if (_isPopulated == false)
-			PopulateChildren();
-	}
-
-	public void PopulateChildren()
+	internal void PopulateChildren()
 	{
 		using (new WaitCursor())
 		{
 			DropDownItems.Clear();
-			if (DirectoryInfo.Exists)
+			if (_directoryInfo.Exists)
 			{
-				foreach (var fileSysInfo in DirectoryInfo.EnumerateFileSystemInfos())
+				foreach (var fileSysInfo in _directoryInfo.EnumerateFileSystemInfos())
 				{
 					switch (fileSysInfo)
 					{
