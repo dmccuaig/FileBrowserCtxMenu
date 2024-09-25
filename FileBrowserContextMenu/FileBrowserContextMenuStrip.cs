@@ -5,9 +5,15 @@ using Microsoft.Win32;
 
 namespace giuaC.FileBrowserContextMenu;
 
+/// <summary>
+/// ContextMenuStrip for cascading browsing of folders and files
+/// </summary>
 public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged
 {
 	private string? _startPath = "";
+	/// <summary>
+	/// Path to start browsing from.
+	/// </summary>
 	[Bindable(true)]
 	public string? StartPath
 	{
@@ -16,6 +22,9 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	}
 
 	private bool _showFileExtensions;
+	/// <summary>
+	/// If true, show file extensions in the menu items.
+	/// </summary>
 	[Bindable(true)]
 	public bool ShowFileExtensions
 	{
@@ -23,13 +32,23 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		set => SetField(ref _showFileExtensions, value);
 	}
 
+	/// <summary>
+	/// Title for the options dialog
+	/// </summary>
 	public string OptionsFormTitle { get; set; } = "Options";
 
 	private bool _isPopulated;
 	private ToolStripMenuItem? _optionsMenuItem;
 
+	/// <summary>
+	/// .ctor
+	/// </summary>
 	public FileBrowserContextMenuStrip() : this(null) { }
 
+	/// <summary>
+	/// .ctor
+	/// </summary>
+	/// <param name="components">Form components for disposing.</param>
 	public FileBrowserContextMenuStrip(IContainer? components)
 		: base(components!)
 	{
@@ -79,6 +98,9 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		Items.Add(_optionsMenuItem!);
 	}
 
+	/// <summary>
+	/// Raised when the user clicks on a file menuitem.
+	/// </summary>
 	public event EventHandler<FileInfo>? FileMenuItemClicked;
 
 	internal void OnFileClicked(FileInfo fileInfo)
@@ -105,6 +127,9 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		SaveOptions();
 	}
 
+	/// <summary>
+	/// Persistence identifier to make multiple instances unique.
+	/// </summary>
 	public string PersistenceId { get; set; } = "Default";
 	private const string ProductKeyName = $"{nameof(giuaC)}.{nameof(FileBrowserContextMenu)}";
 
@@ -142,6 +167,9 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 
 	#region PropertyChanged
 
+	/// <summary>
+	/// Raised when a property changes.
+	/// </summary>
 	public event PropertyChangedEventHandler? PropertyChanged;
 
 	protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)

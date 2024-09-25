@@ -7,6 +7,12 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>giuaC.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>File browsing ContextMenuStrip</Title>
+    <PackageProjectUrl>https://github.com/dmccuaig/FileBrowserCtxMenu</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dmccuaig/FileBrowserCtxMenu</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>winforms,contextmenustrip,file-select</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +32,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
