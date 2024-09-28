@@ -7,12 +7,14 @@
           "files": [ "**/*.csproj" ]
         }
       ],
+      "filter": "filterConfig.yml",
       "namespaceLayout": "nested",
       "enumSortOrder": "declaringOrder",
       "outputFormat": "markdown",
       "output": "md"
     }
   ],
+  
   "build": {
     "content": [
       {
@@ -30,6 +32,7 @@
       "default",
       "modern"
     ],
+	
     "globalMetadata": {
       "_appName": "mysite",
       "_appTitle": "mysite",

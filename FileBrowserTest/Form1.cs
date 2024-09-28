@@ -2,6 +2,7 @@ using giuaC.FileBrowserContextMenu;
 
 namespace FileBrowserTest;
 
+/// <exclude />
 public sealed partial class Form1 : Form
 {
 	public Form1()

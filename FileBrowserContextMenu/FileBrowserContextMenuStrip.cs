@@ -65,6 +65,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		_optionsMenuItem.Click += OnSetOptions_Click;
 	}
 
+	/// <exclude />
 	protected override void OnOpening(CancelEventArgs e)
 	{
 		PopulateMenu();
@@ -103,6 +104,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	/// </summary>
 	public event EventHandler<FileInfo>? FileMenuItemClicked;
 
+	/// <exclude />
 	internal void OnFileClicked(FileInfo fileInfo)
 	{
 		FileMenuItemClicked?.Invoke(this, fileInfo);
@@ -172,11 +174,13 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	/// </summary>
 	public event PropertyChangedEventHandler? PropertyChanged;
 
+	/// <exclude />
 	protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
+	/// <exclude />
 	protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
 	{
 		if (EqualityComparer<T>.Default.Equals(field, value)) return false;
