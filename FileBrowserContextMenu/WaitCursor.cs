@@ -1,5 +1,6 @@
 namespace giuaC.FileBrowserContextMenu;
 
+/// <exclude />
 public class WaitCursor : IDisposable
 {
 	private readonly Cursor? _oldCursor;

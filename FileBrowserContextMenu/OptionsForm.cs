@@ -1,5 +1,6 @@
 ﻿namespace giuaC.FileBrowserContextMenu;
 
+/// <exclude />
 public partial class OptionsForm : Form
 {
 	public string? StartPath

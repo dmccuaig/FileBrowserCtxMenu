@@ -1,5 +1,6 @@
 namespace giuaC.FileBrowserContextMenu;
 
+/// <exclude />
 public sealed class FolderMenuItem : ToolStripMenuItem
 {
 	private readonly bool _showFileExtensions;

@@ -6,7 +6,7 @@ using Microsoft.Win32;
 namespace giuaC.FileBrowserContextMenu;
 
 /// <summary>
-/// ContextMenuStrip for cascading browsing of folders and files
+/// ContextMenuStrip for cascading browsing of folders and files.
 /// </summary>
 public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged
 {

@@ -41,4 +41,14 @@
     </None>
   </ItemGroup>
 
+	<!-- Run DocFx to generate site content -->
+	<Target Name="RunDocFx" AfterTargets="Build">
+		<!--
+		<Exec Command="dotnet tool restore" ContinueOnError="false" />
+		<Exec Command="dotnet tool run docfx docfx\docfx.json" ContinueOnError="false" />
+		-->
+		<Exec Command="docfx docfx\docfx.json" ContinueOnError="false" />
+	</Target>
+
+
 </Project>

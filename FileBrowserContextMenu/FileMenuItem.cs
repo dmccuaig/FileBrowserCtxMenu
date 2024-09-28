@@ -1,5 +1,6 @@
 namespace giuaC.FileBrowserContextMenu;
 
+/// <exclude />
 public sealed class FileMenuItem : ToolStripMenuItem
 {
 	private readonly FileInfo _fileInfo;
