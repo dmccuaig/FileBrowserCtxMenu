@@ -11,7 +11,6 @@
     <Title>File browsing ContextMenuStrip</Title>
     <PackageProjectUrl>https://github.com/dmccuaig/FileBrowserCtxMenu</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dmccuaig/FileBrowserCtxMenu</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>winforms,contextmenustrip,file-select</PackageTags>
   </PropertyGroup>
 

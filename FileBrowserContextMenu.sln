@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F2600A6-92DB-4200-AF5C-E86E2C2D161B}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		..\..\Users\dantrace\Desktop\Screenshot.png = ..\..\Users\dantrace\Desktop\Screenshot.png
 	EndProjectSection
 EndProject
 Global

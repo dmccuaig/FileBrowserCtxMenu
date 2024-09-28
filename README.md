@@ -3,7 +3,9 @@
 Namespace: [giuaC.FileBrowserContextMenu](giuaC.FileBrowserContextMenu.md)  
 Assembly: FileBrowserContextMenu.dll  
 
-ContextMenuStrip for cascading browsing of folders and files.
+Windows Forms ContextMenuStrip for cascading browsing of folders and files.
+
+![ScreenShot](Screenshot.png)
 
 ```csharp
 public class FileBrowserContextMenuStrip : ContextMenuStrip
