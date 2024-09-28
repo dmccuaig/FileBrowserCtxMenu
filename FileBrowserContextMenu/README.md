@@ -1,1 +1,0 @@
-File/Folder browsing ContextMenuStrip

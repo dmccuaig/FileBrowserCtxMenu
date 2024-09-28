@@ -34,13 +34,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-
 	<!-- Run DocFx to generate site content -->
 	<Target Name="RunDocFx" AfterTargets="Build">
 		<!--
