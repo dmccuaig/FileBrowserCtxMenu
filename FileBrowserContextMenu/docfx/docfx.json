@@ -4,30 +4,25 @@
       "src": [
         {
           "src": "../..",
-          "files": [
-            "**/*.csproj"
-          ]
+          "files": [ "**/*.csproj" ]
         }
       ],
-      "dest": "api"
+      "namespaceLayout": "nested",
+      "enumSortOrder": "declaringOrder",
+      "outputFormat": "markdown",
+      "output": "md"
     }
   ],
   "build": {
     "content": [
       {
-        "files": [
-          "**/*.{md,yml}"
-        ],
-        "exclude": [
-          "_site/**"
-        ]
+        "files": [ "**/*.{md,yml}" ],
+        "exclude": [ "_site/**" ]
       }
     ],
     "resource": [
       {
-        "files": [
-          "images/**"
-        ]
+        "files": [ "images/**" ]
       }
     ],
     "output": "_site",
