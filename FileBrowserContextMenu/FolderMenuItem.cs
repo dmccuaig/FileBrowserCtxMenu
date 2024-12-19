@@ -1,18 +1,17 @@
 namespace giuaC.FileBrowserContextMenu;
 
 /// <exclude />
-public sealed class FolderMenuItem : ToolStripMenuItem
+public sealed class FolderMenuItem : FileSystemMenuItem
 {
-	private readonly bool _showFileExtensions;
 	private bool _isPopulated;
 	private readonly DirectoryInfo _directoryInfo;
 
-	public FolderMenuItem(DirectoryInfo dirInfo, bool showFileExtensions)
+	public FolderMenuItem(DirectoryInfo dirInfo, IFileBrowserOptions options)
+		: base(options)
 	{
-		_showFileExtensions = showFileExtensions;
 		_directoryInfo = dirInfo;
 
-		using Icon folderIcon = SystemIcons.GetStockIcon(StockIconId.Folder);
+		using( Icon folderIcon = SystemIcons.GetStockIcon(StockIconId.Folder))
 		{
 			Text = dirInfo.Name;
 			var folderBitMap = folderIcon.ToBitmap();
@@ -49,10 +48,10 @@ public sealed class FolderMenuItem : ToolStripMenuItem
 					switch (fileSysInfo)
 					{
 						case DirectoryInfo dirInfo:
-							DropDownItems.Add(new FolderMenuItem(dirInfo, _showFileExtensions));
+							DropDownItems.Add(new FolderMenuItem(dirInfo, this));
 							break;
 						case FileInfo fileInfo:
-							DropDownItems.Add(new FileMenuItem(fileInfo, _showFileExtensions));
+							DropDownItems.Add(new FileMenuItem(fileInfo, this));
 							break;
 						default:
 							continue;
@@ -62,5 +61,17 @@ public sealed class FolderMenuItem : ToolStripMenuItem
 
 			_isPopulated = true;
 		}
+	}
+
+	protected override void OnMouseDown(MouseEventArgs e)
+	{
+		if (ShowShellMenu && e is { Button: MouseButtons.Right, Clicks: 1 })
+		{
+			var shellContextMenu = new ShellContextMenu.ShellContextMenu();
+			shellContextMenu.ShowContextMenu(_directoryInfo, Cursor.Position);
+			return;
+		}
+
+		base.OnMouseDown(e);
 	}
 }

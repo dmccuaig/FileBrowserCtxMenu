@@ -5,10 +5,28 @@ using Microsoft.Win32;
 
 namespace giuaC.FileBrowserContextMenu;
 
+public interface IFileBrowserOptions
+{
+	/// <summary>
+	/// Path to start browsing from.
+	/// </summary>
+	string? StartPath { get; }
+
+	/// <summary>
+	/// If true, show file extensions in the menu items.
+	/// </summary>
+	bool ShowFileExtensions { get; }
+
+	/// <summary>
+	/// If true, Show Shell Menu on right-click
+	/// </summary>
+	bool ShowShellMenu { get; }
+}
+
 /// <summary>
 /// ContextMenuStrip for cascading browsing of folders and files.
 /// </summary>
-public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged
+public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChanged, IFileBrowserOptions
 {
 	private string? _startPath = "";
 	/// <summary>
@@ -32,6 +50,21 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		set => SetField(ref _showFileExtensions, value);
 	}
 
+	private bool _showShellMenu;
+	/// <summary>
+	/// If true, Show Shell Menu on right-click
+	/// </summary>
+	public bool ShowShellMenu
+	{
+		get => _showShellMenu;
+		set => SetField(ref _showShellMenu, value);
+	}
+
+	/// <summary>
+	/// Menu items to show after options.
+	/// </summary>
+	public ICollection<ToolStripItem> AfterOptions { get; } = new List<ToolStripItem>();
+
 	/// <summary>
 	/// Title for the options dialog
 	/// </summary>
@@ -43,7 +76,10 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	/// <summary>
 	/// .ctor
 	/// </summary>
-	public FileBrowserContextMenuStrip() : this(null) { }
+	public FileBrowserContextMenuStrip()
+	{
+		Setup();
+	}
 
 	/// <summary>
 	/// .ctor
@@ -52,17 +88,19 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	public FileBrowserContextMenuStrip(IContainer? components)
 		: base(components!)
 	{
-		InitializeComponents();
-		PropertyChanged += OnPropertyChanged;
-		RestoreOptions();
-		ClearMenu();
+		Setup();
 	}
 
-	private void InitializeComponents()
+
+	private void Setup()
 	{
 		_optionsMenuItem = new ToolStripMenuItem("Options...");
 		_optionsMenuItem.Image = Resources.Settings_16x;
 		_optionsMenuItem.Click += OnSetOptions_Click;
+
+		PropertyChanged += OnPropertyChanged;
+		RestoreOptions();
+		ClearMenu();
 	}
 
 	/// <exclude />
@@ -79,7 +117,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		if (string.IsNullOrWhiteSpace(StartPath) == false && Path.Exists(StartPath))
 		{
 			var dirInfo = new DirectoryInfo(StartPath);
-			var dirMenuItem = new FolderMenuItem(dirInfo, ShowFileExtensions);
+			var dirMenuItem = new FolderMenuItem(dirInfo, this);
 			dirMenuItem.PopulateChildren();
 			Items.AddRange(dirMenuItem.DropDownItems);
 		}
@@ -89,6 +127,11 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 
 		Items.Add(_optionsMenuItem!);
 
+		foreach (var toolStripItem in AfterOptions)
+		{
+			Items.Add(toolStripItem);
+		}
+
 		_isPopulated = true;
 	}
 
@@ -97,6 +140,11 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 		Items.Clear();
 		_isPopulated = false;
 		Items.Add(_optionsMenuItem!);
+
+		foreach (var toolStripItem in AfterOptions)
+		{
+			Items.Add(toolStripItem);
+		}
 	}
 
 	/// <summary>

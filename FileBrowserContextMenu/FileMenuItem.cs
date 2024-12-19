@@ -1,17 +1,17 @@
 namespace giuaC.FileBrowserContextMenu;
 
 /// <exclude />
-public sealed class FileMenuItem : ToolStripMenuItem
+public sealed class FileMenuItem : FileSystemMenuItem
 {
 	private readonly FileInfo _fileInfo;
 
-	public FileMenuItem(FileInfo fileInfo, bool showFileExtensions = true)
+	public FileMenuItem(FileInfo fileInfo, IFileBrowserOptions options)
+	: base(options)
 	{
 		_fileInfo = fileInfo;
 
-		string name = showFileExtensions ? fileInfo.Name : Path.GetFileNameWithoutExtension(fileInfo.Name);
+		string name = ShowFileExtensions ? fileInfo.Name : Path.GetFileNameWithoutExtension(fileInfo.Name);
 		Text = name;
-
 
 		Icon? icon = null;
 		try
@@ -52,4 +52,16 @@ public sealed class FileMenuItem : ToolStripMenuItem
 		ctxMenuStrip?.OnFileClicked(_fileInfo);
 	}
 
+	protected override void OnMouseDown(MouseEventArgs e)
+	{
+		if (ShowShellMenu && e is { Button: MouseButtons.Right, Clicks: 1 })
+		{
+			var shellContextMenu = new ShellContextMenu.ShellContextMenu();
+			shellContextMenu.ShowContextMenu(_fileInfo, Cursor.Position);
+			return;
+		}
+
+		base.OnMouseDown(e);
+
+	}
 }

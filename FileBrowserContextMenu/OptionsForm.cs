@@ -35,11 +35,11 @@ public partial class OptionsForm : Form
 
 	private void OptionsForm_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
 	{
-		if (DialogResult == DialogResult.OK && Directory.Exists(StartPath) == false)
-		{
-			MessageBox.Show($"The StartPath folder\n'{StartPath}'\ndoes not exist.", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			e.Cancel = true;
-		}
+		if (DialogResult != DialogResult.OK || Directory.Exists(StartPath))
+			return;
+
+		MessageBox.Show($"The StartPath folder\n'{StartPath}'\ndoes not exist.", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		e.Cancel = true;
 	}
 
 	private static string? GetDirectory(string? initialDirectory = null)
