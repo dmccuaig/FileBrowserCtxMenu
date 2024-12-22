@@ -1,39 +1,51 @@
-using giuaC.FileBrowserContextMenu;
+using System.Windows.Forms.FileBrowserContextMenu;
 
 namespace FileBrowserTest;
 
 /// <exclude />
 public sealed partial class Form1 : Form
 {
+	private readonly FileBrowserContextMenuStrip _fileBrowserContextMenuStrip;
+
 	public Form1()
 	{
 		InitializeComponent();
 		components = new System.ComponentModel.Container();
 
-		var fileBrowserContextMenuStrip = new FileBrowserContextMenuStrip(components);
-		fileBrowserContextMenuStrip.OptionsFormTitle = "Shortcut Browser Options";
+		_fileBrowserContextMenuStrip = new FileBrowserContextMenuStrip(components);
+		_fileBrowserContextMenuStrip.OptionsFormTitle = "Shortcut Browser Options";
+
+		OnShowExtensionsCheckChanged();
+		OnShowShellMenuCheckChanged();
 
 		_startPathLabel.DataBindings.Add(
 			new Binding(
 				nameof(_startPathLabel.Text),
-				fileBrowserContextMenuStrip,
-				nameof(fileBrowserContextMenuStrip.StartPath),
+				_fileBrowserContextMenuStrip,
+				nameof(_fileBrowserContextMenuStrip.StartPath),
 				true));
 
-		_showFileExtensionsCheckBox.DataBindings.Add(
-			new Binding(
-				nameof(_showFileExtensionsCheckBox.Checked),
-				fileBrowserContextMenuStrip,
-				nameof(fileBrowserContextMenuStrip.ShowFileExtensions)));
+		_showFileExtensionsCheckBox.CheckedChanged += (s,e) => OnShowExtensionsCheckChanged();
+		_showShellMenuCheckbox.CheckedChanged += (s,e) => OnShowShellMenuCheckChanged();
 
-		fileBrowserContextMenuStrip.FileMenuItemClicked += FileBrowserContextMenuStrip_FileMenuItemClicked;
+		_fileBrowserContextMenuStrip.FileMenuItemClicked += OnFileMenuItemClicked;
 
-		ContextMenuStrip = fileBrowserContextMenuStrip;
+		ContextMenuStrip = _fileBrowserContextMenuStrip;
 	}
 
-	private void FileBrowserContextMenuStrip_FileMenuItemClicked(object? sender, FileInfo fileInfo)
+	private void OnFileMenuItemClicked(object? sender, FileInfo fileInfo)
 	{
-		_mouseClicksTextBox.AppendText(fileInfo.FullName + "\r\n");
+		_mouseClicksTextBox.AppendText($"{fileInfo.FullName}\r\n");
 	}
+
+	private void OnShowExtensionsCheckChanged()
+		{
+			_fileBrowserContextMenuStrip.ShowFileExtensions = _showFileExtensionsCheckBox.Checked;
+		}
+
+		private void OnShowShellMenuCheckChanged()
+		{
+			_fileBrowserContextMenuStrip.ShowShellMenu = _showShellMenuCheckbox.Checked;
+		}
 
 }

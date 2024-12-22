@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>giuaC.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <RootNamespace>System.Windows.Forms.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>File browsing ContextMenuStrip</Title>
     <PackageProjectUrl>https://github.com/dmccuaig/FileBrowserCtxMenu</PackageProjectUrl>
@@ -38,13 +38,13 @@
   </ItemGroup>
 
 	<!-- Run DocFx to generate site content -->
-	<Target Name="RunDocFx" AfterTargets="Build">
-		<!--
+	<!--<Target Name="RunDocFx" AfterTargets="Build">
+		--><!--
 		<Exec Command="dotnet tool restore" ContinueOnError="false" />
 		<Exec Command="dotnet tool run docfx docfx\docfx.json" ContinueOnError="false" />
-		-->
+		--><!--
 		<Exec Command="docfx docfx\docfx.json" ContinueOnError="false" />
-	</Target>
+	</Target>-->
 
 
 </Project>

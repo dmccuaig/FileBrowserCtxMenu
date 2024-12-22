@@ -1,4 +1,6 @@
-namespace giuaC.FileBrowserContextMenu;
+using System.Diagnostics;
+
+namespace System.Windows.Forms.FileBrowserContextMenu;
 
 /// <exclude />
 public sealed class FolderMenuItem : FileSystemMenuItem
@@ -63,15 +65,18 @@ public sealed class FolderMenuItem : FileSystemMenuItem
 		}
 	}
 
-	protected override void OnMouseDown(MouseEventArgs e)
+	protected override void OnMouseLeftUp()
 	{
-		if (ShowShellMenu && e is { Button: MouseButtons.Right, Clicks: 1 })
-		{
-			var shellContextMenu = new ShellContextMenu.ShellContextMenu();
-			shellContextMenu.ShowContextMenu(_directoryInfo, Cursor.Position);
-			return;
-		}
+		Debug.WriteLine(nameof(FolderMenuItem) + " " + nameof(OnMouseLeftUp));
 
-		base.OnMouseDown(e);
 	}
+
+	protected override void OnShowShellMenu()
+	{
+		Debug.WriteLine(nameof(FolderMenuItem) + " " + nameof(OnShowShellMenu));
+
+		var shellContextMenu = new giuaC.ShellContextMenu.ShellContextMenu();
+		shellContextMenu.ShowContextMenu(_directoryInfo, Cursor.Position);
+	}
+
 }

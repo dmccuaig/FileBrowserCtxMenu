@@ -33,6 +33,7 @@
 			_mouseClicksTextBox = new TextBox();
 			_startPathLabel = new Label();
 			_showFileExtensionsCheckBox = new CheckBox();
+			_showShellMenuCheckbox = new CheckBox();
 			label1 = new Label();
 			groupBox1 = new GroupBox();
 			groupBox1.SuspendLayout();
@@ -85,11 +86,22 @@
 			_showFileExtensionsCheckBox.Text = "Show File Extensions";
 			_showFileExtensionsCheckBox.UseVisualStyleBackColor = true;
 			// 
+			// _showShellMenuCheckbox
+			// 
+			_showShellMenuCheckbox.AutoSize = true;
+			_showShellMenuCheckbox.Location = new Point(12, 61);
+			_showShellMenuCheckbox.Name = "_showShellMenuCheckbox";
+			_showShellMenuCheckbox.Size = new Size(122, 19);
+			_showShellMenuCheckbox.TabIndex = 5;
+			_showShellMenuCheckbox.Text = "Show Shell Menus";
+			_showShellMenuCheckbox.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(384, 461);
+			Controls.Add(_showShellMenuCheckbox);
 			Controls.Add(groupBox1);
 			Controls.Add(_showFileExtensionsCheckBox);
 			Controls.Add(_startPathLabel);
@@ -108,5 +120,6 @@
 		private Label _startPathLabel;
 		private CheckBox _showFileExtensionsCheckBox;
 		private TextBox _mouseClicksTextBox;
+		private CheckBox _showShellMenuCheckbox;
 	}
 }

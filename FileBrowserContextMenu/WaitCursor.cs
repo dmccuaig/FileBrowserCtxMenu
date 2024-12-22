@@ -1,4 +1,4 @@
-namespace giuaC.FileBrowserContextMenu;
+namespace System.Windows.Forms.FileBrowserContextMenu;
 
 /// <exclude />
 public class WaitCursor : IDisposable

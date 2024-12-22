@@ -1,9 +1,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using giuaC.FileBrowserContextMenu.Properties;
 using Microsoft.Win32;
 
-namespace giuaC.FileBrowserContextMenu;
+namespace System.Windows.Forms.FileBrowserContextMenu;
 
 public interface IFileBrowserOptions
 {
@@ -54,6 +53,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	/// <summary>
 	/// If true, Show Shell Menu on right-click
 	/// </summary>
+	[Bindable(true)]
 	public bool ShowShellMenu
 	{
 		get => _showShellMenu;
@@ -95,7 +95,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	private void Setup()
 	{
 		_optionsMenuItem = new ToolStripMenuItem("Options...");
-		_optionsMenuItem.Image = Resources.Settings_16x;
+		_optionsMenuItem.Image = Properties.Resources.Settings_16x;
 		_optionsMenuItem.Click += OnSetOptions_Click;
 
 		PropertyChanged += OnPropertyChanged;

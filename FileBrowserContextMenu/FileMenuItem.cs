@@ -1,4 +1,6 @@
-namespace giuaC.FileBrowserContextMenu;
+using System.Diagnostics;
+
+namespace System.Windows.Forms.FileBrowserContextMenu;
 
 /// <exclude />
 public sealed class FileMenuItem : FileSystemMenuItem
@@ -44,24 +46,18 @@ public sealed class FileMenuItem : FileSystemMenuItem
 		return menuItem.Owner as FileBrowserContextMenuStrip;
 	}
 
-	protected override void OnClick(EventArgs e)
+	protected override void OnMouseLeftUp()
 	{
-		base.OnClick(e);
-
+		Debug.WriteLine(nameof(FileMenuItem) + " " + nameof(OnMouseLeftUp));
 		FileBrowserContextMenuStrip? ctxMenuStrip = GetContextMenuStrip();
 		ctxMenuStrip?.OnFileClicked(_fileInfo);
 	}
 
-	protected override void OnMouseDown(MouseEventArgs e)
+	protected override void OnShowShellMenu()
 	{
-		if (ShowShellMenu && e is { Button: MouseButtons.Right, Clicks: 1 })
-		{
-			var shellContextMenu = new ShellContextMenu.ShellContextMenu();
-			shellContextMenu.ShowContextMenu(_fileInfo, Cursor.Position);
-			return;
-		}
-
-		base.OnMouseDown(e);
-
+		Debug.WriteLine(nameof(FileMenuItem) + " " + nameof(OnShowShellMenu));
+		var shellContextMenu = new giuaC.ShellContextMenu.ShellContextMenu();
+		shellContextMenu.ShowContextMenu(_fileInfo, Cursor.Position);
 	}
+
 }

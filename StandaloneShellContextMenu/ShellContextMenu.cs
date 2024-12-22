@@ -27,6 +27,7 @@ namespace giuaC.ShellContextMenu
 	///    files[0] = new FileInfo(@"c:\windows\notepad.exe");
 	///    scm.ShowContextMenu(this.Handle, files, Cursor.Position);
 	/// </example>
+	/// <exclude />
 	public class ShellContextMenu : NativeWindow
 	{
 		#region Constructor
