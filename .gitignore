@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /FileBrowserContextMenu/docfx/api
 /FileBrowserContextMenu/docfx/_site
 md
+/docfx/_site
