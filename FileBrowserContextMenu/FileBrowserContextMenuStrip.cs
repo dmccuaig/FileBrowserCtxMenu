@@ -61,7 +61,7 @@ public class FileBrowserContextMenuStrip : ContextMenuStrip, INotifyPropertyChan
 	}
 
 	/// <summary>
-	/// Menu items to show after options.
+	/// Menu items to show after the "Options" menu item.
 	/// </summary>
 	public ICollection<ToolStripItem> AfterOptions { get; } = new List<ToolStripItem>();
 
