@@ -1,7 +1,4 @@
-﻿## <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip"></a> Class FileBrowserContextMenuStrip
-
-Namespace: [giuaC.FileBrowserContextMenu](giuaC.FileBrowserContextMenu.md)  
-Assembly: FileBrowserContextMenu.dll  
+﻿## Class FileBrowserContextMenuStrip
 
 Windows Forms ContextMenuStrip for cascading browsing of folders and files.
 
@@ -10,32 +7,17 @@ Windows Forms ContextMenuStrip for cascading browsing of folders and files.
 ```csharp
 public class FileBrowserContextMenuStrip : ContextMenuStrip
 ```
-
-##### Inheritance
-
-[object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[MarshalByRefObject](https://learn.microsoft.com/dotnet/api/system.marshalbyrefobject) ← 
-[Component](https://learn.microsoft.com/dotnet/api/system.componentmodel.component) ← 
-[Control](https://learn.microsoft.com/dotnet/api/system.windows.forms.control) ← 
-[ScrollableControl](https://learn.microsoft.com/dotnet/api/system.windows.forms.scrollablecontrol) ← 
-[ToolStrip](https://learn.microsoft.com/dotnet/api/system.windows.forms.toolstrip) ← 
-[ToolStripDropDown](https://learn.microsoft.com/dotnet/api/system.windows.forms.toolstripdropdown) ← 
-[ToolStripDropDownMenu](https://learn.microsoft.com/dotnet/api/system.windows.forms.toolstripdropdownmenu) ← 
-[ContextMenuStrip](https://learn.microsoft.com/dotnet/api/system.windows.forms.contextmenustrip) ← 
-[FileBrowserContextMenuStrip](giuaC.FileBrowserContextMenu.FileBrowserContextMenuStrip.md)
-
 ### Constructors
 
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip__ctor"></a> FileBrowserContextMenuStrip\(\)
 ```csharp
 public FileBrowserContextMenuStrip()
 ```
 
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip__ctor_System_ComponentModel_IContainer_"></a> FileBrowserContextMenuStrip\(IContainer?\)
 ```csharp
 public FileBrowserContextMenuStrip(IContainer? components)
-```
+// components: container for disposing.
 
+```
 ##### Parameters
 
 `components` [IContainer](https://learn.microsoft.com/dotnet/api/system.componentmodel.icontainer)?
@@ -43,55 +25,40 @@ public FileBrowserContextMenuStrip(IContainer? components)
 Form components for disposing.
 
 ### Properties
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_OptionsFormTitle"></a> OptionsFormTitle
-
-Title for the options dialog
-
 ```csharp
-public string OptionsFormTitle { get; set; }
+ // Menu items to show after the "Options" menu item.
+ // Add menu items into AfterOptions to add custom menu item controls.
+ public ICollection<ToolStripItem> AfterOptions { get; }
 ```
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_PersistenceId"></a> PersistenceId
-
-Persistence identifier to make multiple instances unique.
-
 ```csharp
+ // Title for the options dialog
+ public string OptionsFormTitle { get; set; }
+```
+```csharp
+// Persistence identifier to make multiple instances unique.
 public string PersistenceId { get; set; }
 ```
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_ShowFileExtensions"></a> ShowFileExtensions
-
-If true, show file extensions in the menu items.
-
 ```csharp
+// If true, show file extensions in the menu items.
 [Bindable(true)]
 public bool ShowFileExtensions { get; set; }
 ```
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_StartPath"></a> StartPath
-
-Path to start browsing from.
-
 ```csharp
+// If true, Show Shell Menu on right-click
+// Shell menu provides an explorer-like menu for file actions such as copy/paste etc.
+[Bindable(true)]
+public bool ShowShellMenu  { get; set; }
+```
+```csharp
+// Path to start browsing from.
 [Bindable(true)]
 public string? StartPath { get; set; }
 ```
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_FileMenuItemClicked"></a> FileMenuItemClicked
-
-Raised when the user clicks on a file menuitem.
-
+### Events
 ```csharp
+// Raised when the user clicks on a file MenuItem.
 public event EventHandler<FileInfo>? FileMenuItemClicked
 ```
-
-### Events
-
-#### <a id="giuaC_FileBrowserContextMenu_FileBrowserContextMenuStrip_PropertyChanged"></a> PropertyChanged
-
-Raised when a property changes.
-
 ```csharp
 public event PropertyChangedEventHandler? PropertyChanged
 ```

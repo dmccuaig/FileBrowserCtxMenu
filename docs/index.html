@@ -1,1 +1,94 @@
-<p>Coming soon</p>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>FileBrowserContextMenuStrip</title>
+
+<style type="text/css">
+.comment {
+	color: #008000;
+}
+.identifier {
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Class FileBrowserContextMenuStrip</h2>
+<p>Windows Forms ContextMenuStrip for cascading browsing of folders and files.</p>
+
+<p><img src="../Screenshot.png" alt="ScreenShot"/></p>
+
+<p><code>
+public class <span class="identifier">FileBrowserContextMenuStrip</span> : ContextMenuStrip
+</code></p>
+
+<h3>Constructors</h3>
+
+<p><code>
+public <span class="identifier">FileBrowserContextMenuStrip</span>()
+</code></p>
+
+<code>
+public <span class="identifier">FileBrowserContextMenuStrip</span>(IContainer? 
+<span class="identifier">components</span>)<br/>
+<span class="comment">// components: container for disposing.</span>
+</code>
+
+<h3 id="properties">Properties</h3>
+
+<p><code>
+<span class="comment">// Menu items to show after the "Options" menu item.<br />
+// Add menu items into AfterOptions to add custom menu item controls.</span><br />
+public ICollection&lt;ToolStripItem&gt; <span class="identifier">AfterOptions
+</span>{ get; }
+</code></p>
+
+<p><code>
+<span class="comment">// Title for the options dialog</span><br />
+public string <span class="identifier">OptionsFormTitle </span>{ get; set; }
+</code></p>
+
+<p><code>
+<span class="comment">// Persistence identifier to make multiple instances unique.</span><br />
+public string <span class="identifier">PersistenceId </span>{ get; set; }
+</code></p>
+
+<p><code>
+<span class="comment">// If true, show file extensions in the menu items.</span><br />
+[Bindable(true)]
+public bool <span class="identifier">ShowFileExtensions </span>{ get; set; }
+</code></p>
+
+<p><code>
+<span class="comment">// If true, Show Shell Menu on right-click<br />
+// Shell menu provides an explorer-like menu for file actions such as copy/paste etc.<br />
+</span>[Bindable(true)]
+public bool <span class="identifier">ShowShellMenu </span>{ get; set; }
+</code></p>
+
+<p><code>
+<span class="comment">// Path to start browsing from.</span><br />
+[Bindable(true)]
+public string? <span class="identifier">StartPath </span>{ get; set; }
+</code></p>
+
+<h3 id="events">Events</h3>
+
+<p><code>
+<span class="comment">// Raised when the user clicks on a file MenuItem.</span><br />
+public event EventHandler&lt;FileInfo&gt;? <span class="identifier">FileMenuItemClicked
+</span>
+</code></p>
+
+<p><code>
+public event PropertyChangedEventHandler? <span class="identifier">PropertyChanged
+</span>
+</code></p>
+
+</body>
+
+</html>
