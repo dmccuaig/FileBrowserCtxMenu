@@ -2,7 +2,7 @@
 
 Windows Forms ContextMenuStrip for cascading browsing of folders and files.
 
-![ScreenShot](Screenshot.png)
+![ScreenShot](docs/Screenshot.png)
 
 ```csharp
 public class FileBrowserContextMenuStrip : ContextMenuStrip
